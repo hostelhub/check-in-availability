@@ -1,5 +1,9 @@
 {
   "name": "",
+  "jest": {
+    "verbose": true,
+    "setupFilesAfterEnv": ["<rootDir>tests/setupTests.js"]
+  },
   "version": "",
   "description": "",
   "author": "",
