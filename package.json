@@ -2,7 +2,9 @@
   "name": "",
   "jest": {
     "verbose": true,
-    "setupFilesAfterEnv": ["<rootDir>tests/sum.test.js"]
+    "setupFilesAfterEnv": [
+      "<rootDir>tests/sum.test.js"
+    ]
   },
   "version": "",
   "description": "",
@@ -29,6 +31,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
     "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.11.2",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "faker": "^4.1.0",
     "install": "^0.12.2",
