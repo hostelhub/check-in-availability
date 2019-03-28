@@ -2,7 +2,7 @@
   "name": "",
   "jest": {
     "verbose": true,
-    "setupFilesAfterEnv": ["<rootDir>tests/setupTests.js"]
+    "setupFilesAfterEnv": ["<rootDir>tests/sum.test.js"]
   },
   "version": "",
   "description": "",
