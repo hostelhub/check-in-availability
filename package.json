@@ -1,11 +1,5 @@
 {
   "name": "",
-  "jest": {
-    "verbose": true,
-    "setupFilesAfterEnv": [
-      "<rootDir>tests/sum.test.js"
-    ]
-  },
   "version": "",
   "description": "",
   "author": "",
@@ -16,6 +10,12 @@
   "scripts": {
     "test": "jest",
     "react-dev": "webpack -d --watch"
+  },
+  "jest": {
+    "verbose": true,
+    "setupFilesAfterEnv": [
+      "<rootDir>tests/sum.test.js"
+    ]
   },
   "dependencies": {
     "body-parser": "^1.18.3",
