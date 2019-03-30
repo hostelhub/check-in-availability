@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Calendar extends React.Component {
+class App extends React.Component {
   constructor() {
     super();
   }
@@ -12,4 +12,4 @@ class Calendar extends React.Component {
   }
 }
 
-export default Calendar;
+export default App;
