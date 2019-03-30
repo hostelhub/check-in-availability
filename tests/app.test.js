@@ -1,8 +1,8 @@
 import React from 'react';
-import Calendar from '../client/src/components/calendar';
+import App from '../client/src/components/App';
 import { shallow } from 'enzyme';
 
 it('Going to test for something', () => {
-  const wrapper = shallow(<Calendar />);
+  const wrapper = shallow(<App />);
   expect(wrapper.text()).toEqual('send help');
 });
