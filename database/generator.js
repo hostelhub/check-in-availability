@@ -3,10 +3,6 @@ const faker = require('faker');
 // Currently only has country names and not flags, below package has flags
 // https://github.com/lipis/flag-icon-css
 
-const hostelId = () => {
-  return faker.random.number();
-};
-
 const countryPicker = () => {
   const stayingCountries = [];
 
@@ -57,7 +53,6 @@ idk i'll figure something out
 
 
 module.exports = {
-  hostelId,
   countryPicker,
   residentNumber,
   bookedDates,
