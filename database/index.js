@@ -6,7 +6,7 @@ const db = mongoose.connect(
 );
 
 const hostelSchema = mongoose.Schema({
-  hostelId: { type: Number, unique: true },
+  hostelId: Number,
   bookedDates: Array,
   countries: Array,
   residents: Array,
