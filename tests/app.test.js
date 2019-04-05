@@ -8,6 +8,7 @@ describe('Calendar component application', () => {
     const wrapper = shallow(<App />);
     expect(wrapper.exists()).toBe(true);
   });
+  
   it('Tests for properly rendering Calendar component.', () => {
     const wrapper = shallow(<Calendar />);
     expect(wrapper.exists()).toBe(true);
