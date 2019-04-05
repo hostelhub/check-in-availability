@@ -13,4 +13,3 @@ describe('Calendar component application', () => {
     expect(wrapper.exists()).toBe(true);
   })
 })
-
