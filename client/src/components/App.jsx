@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Calendar from './calendar.jsx';
+import Calendar from './Calendar.jsx';
 import axios from 'axios';
 
 const Title = styled.header`
