@@ -50,7 +50,7 @@ class Calendar extends React.Component {
   componentDidMount() {
     const month = moment.months()[moment().month()];
     const year = moment().year();
-    const days = this.firstWeekGenerator(month, year);
+    const days = this.allWeeksGenerator(month, year);
     this.setState({
       month,
       year,
@@ -87,6 +87,18 @@ class Calendar extends React.Component {
     };
     return firstWeek;
   };
+
+  allWeeksGenerator(month, year) {
+    const weeks = [];
+    const firstWeek = this.firstWeekGenerator(month, year);
+    weeks.push(firstWeek);
+    for (let i = 0; i < 5; i += 1) {
+      const week = weeks[i];
+      const newWeek = week.map(day => (parseInt(moment().year(year).month(month).date(day).add(7, 'days').format().slice(8, 10))));
+      weeks.push(newWeek);
+    }
+    return weeks;
+  }
 
   clickHandler(e) {
     this.state.day = e.target.dataset.value;
