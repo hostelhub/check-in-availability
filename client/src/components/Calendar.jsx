@@ -29,7 +29,7 @@ const Dates = styled.td`
   display: flex;
   font-size: 20px;
   height: 40px;
-  width: 40px;
+  width: 50px;
   align-items: center;
   justify-content: center;
   border: solid 1px #AFADAD;
@@ -39,41 +39,61 @@ class Calendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      weekdays: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
       date: '',
       month: '',
       year: 0,
-      week1: [],
-      week2: [],
-      week3: [],
-      week4: [],
-      week5: [],
-      week6: []
-    }
-  }
+      days: [],
+    };
+  };
   
   componentDidMount() {
     const month = moment.months()[moment().month()];
     const year = moment().year();
-    const week1 = [1, 2, 3, 4, 5, 6, 7];
-    const week2 = [ 8, 9, 10, 11, 12, 13, 14];
-    const week3 = [15, 16, 17, 18, 19, 20, 21];
-    const week4 = [22, 23, 24, 25, 26, 27, 28];
-    const week5 = [29, 30, 1, 2, 3, 4, 5];
-    const week6 = [6, 7, 8, 9, 10, 11, 12];
+    const days = this.firstWeekGenerator(month, year);
     this.setState({
       month,
       year,
-      week1,
-      week2,
-      week3,
-      week4,
-      week5,
-      week6
+      days,
     });
-  }
+  };
+
+  firstWeekGenerator(month, year) {
+    const firstWeek = [];
+    const firstDay = moment().year(year).month(month).startOf('month');
+    const firstDayIndex = firstDay.format('dd');
+    console.log(firstDay)
+    const daysOfWeek = {
+      'Mo': 1,
+      'Tu': 2,
+      'We': 3,
+      'Th': 4,
+      'Fr': 5,
+      'Sa': 6,
+      'Su': 7
+    };
+    if (firstDayIndex === 'Mo') {
+      for (let i = 1; i < 8; i += 1) {
+        firstWeek.push(i);
+      };
+    } else {
+      for (let i = 1; i < daysOfWeek[firstDayIndex]; i += 1) {
+        firstWeek.unshift(parseInt(firstDay.subtract(1, 'days').format().slice(8, 10)));
+        console.log(firstDay.subtract(1, 'days').format('d'));
+      };
+      for (let i = 1; i < 9 - daysOfWeek[firstDayIndex]; i += 1) {
+        firstWeek.push(i);
+      };
+    };
+    return firstWeek;
+  };
+
+  clickHandler(e) {
+    this.state.day = e.target.dataset.value;
+    console.log(this.state.day);
+  };
 
   render() {
-    const weekdays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
     let key = 0;
     return(
       <div>
@@ -82,19 +102,14 @@ class Calendar extends React.Component {
             <CalendarMonthYear>{this.state.month} {this.state.year}</CalendarMonthYear>
           </thead>
           <tbody>
-            <CalendarDays>{weekdays.map(day => (<Dates key={key += 1}>{day}</Dates>))}</CalendarDays>
-            <CalendarDates>{this.state.week1.map(day => (<Dates key={key += 1}>{day}</Dates>))}</CalendarDates>
-            <CalendarDates>{this.state.week2.map(day => (<Dates key={key += 1}>{day}</Dates>))}</CalendarDates>
-            <CalendarDates>{this.state.week3.map(day => (<Dates key={key += 1}>{day}</Dates>))}</CalendarDates>
-            <CalendarDates>{this.state.week4.map(day => (<Dates key={key += 1}>{day}</Dates>))}</CalendarDates>
-            <CalendarDates>{this.state.week5.map(day => (<Dates key={key += 1}>{day}</Dates>))}</CalendarDates>
-            <CalendarDates>{this.state.week6.map(day => (<Dates key={key += 1}>{day}</Dates>))}</CalendarDates>
+            <CalendarDays>{this.state.weekdays.map(day => (<Dates key={key += 1}>{day}</Dates>))}</CalendarDays>
+            <CalendarDates>{this.state.days.map(day => (<Dates key={day} data-value={day} onClick={this.clickHandler.bind(this)}>{day}</Dates>))}</CalendarDates>
           </tbody>
         </table>
         {this.state.date}
       </div>
-    )
-  }
-}
+    );
+  };
+};
 
 export default Calendar;
