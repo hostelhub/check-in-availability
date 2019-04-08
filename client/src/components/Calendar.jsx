@@ -3,6 +3,12 @@ import moment from 'moment';
 import styled from 'styled-components';
 import axios from 'axios';
 
+const CalendarHeader = styled.thead`
+  display: flex;
+  justify-content: column;
+  justify-content: space-between;
+`;
+
 const CalendarMonthYear = styled.tr`
   display: flex;
   justify-content: center;
@@ -54,7 +60,7 @@ class Calendar extends React.Component {
   componentDidMount() {
     const month = moment.months()[moment().month()];
     const year = moment().year();
-    const days = this.allWeeksGenerator(moment.months().indexOf(month), year);
+    const days = this.allWeeksGenerator(moment.months().indexOf('month'), year);
     this.setState({
       month,
       year,
@@ -81,22 +87,22 @@ class Calendar extends React.Component {
       'Su': 7
     };
     if (firstDayIndex === 'Mo') {
-      for (let i = 1; i < 8; i += 1) {
-        firstWeek.push(i);
-      };
+      for (let i = 0; i < 7; i += 1) {
+        const firstDayOfMonth = moment().year(year).month(month).startOf('month');
+        firstWeek.push(firstDayOfMonth.add(i, 'days'));
+      }
     } else {
       for (let i = 1; i < daysOfWeek[firstDayIndex]; i += 1) {
-        firstWeek.unshift(parseInt(firstDay.subtract(1, 'days').format().slice(8, 10)));
+        const firstDayOfMonth = moment().year(year).month(month).startOf('month');
+        firstWeek.unshift(firstDayOfMonth.subtract(i, 'days'));
       };
-      for (let i = 1; i < 9 - daysOfWeek[firstDayIndex]; i += 1) {
-        firstWeek.push(i);
-      };
-    };
+      for (let i = 0; i < 8 - daysOfWeek[firstDayIndex]; i += 1) {
+        const firstDayOfMonth = moment().year(year).month(month).startOf('month');
+        firstWeek.push(firstDayOfMonth.add(i, 'days'));
+      }
+    }
     return firstWeek;
   };
-
-  // need to have an array of moment objects in both the first week and all weeks generators
-  // having only dates messes it up
 
   allWeeksGenerator(month, year) {
     const allWeeks = [];
@@ -104,13 +110,8 @@ class Calendar extends React.Component {
     allWeeks.push(firstWeek);
     for (let i = 0; i < 5; i += 1) {
       const week = allWeeks[i];
-      if (i === 0) {
-        let newWeek = week.map(day => (parseInt(moment([year, month - 1, day]).add(7, 'days').format().slice(8, 10))));
-        allWeeks.push(newWeek);
-      } else {
-        let newWeek = week.map(day => (parseInt(moment([year, month, day]).add(7, 'days').format().slice(8, 10))));
-        allWeeks.push(newWeek);
-      }
+      const newWeek = week.map(day => (moment(day).add(1, 'week')));
+      allWeeks.push(newWeek);
     }
     return allWeeks;
   }
@@ -125,17 +126,19 @@ class Calendar extends React.Component {
     return(
       <div>
         <table>
-          <thead>
+          <CalendarHeader>
+            <button>prev</button>
             <CalendarMonthYear>{this.state.month} {this.state.year}</CalendarMonthYear>
-          </thead>
+            <button>next</button>
+          </CalendarHeader>
           <tbody>
             <CalendarDays>{this.state.weekdays.map(day => (<Dates key={key += 1}>{day}</Dates>))}</CalendarDays>
-            <CalendarDates>{this.state.week0.map(day => (<Dates key={day} data-value={day} onClick={this.clickHandler.bind(this)}>{day}</Dates>))}</CalendarDates>
-            <CalendarDates>{this.state.week1.map(day => (<Dates key={day} data-value={day} onClick={this.clickHandler.bind(this)}>{day}</Dates>))}</CalendarDates>
-            <CalendarDates>{this.state.week2.map(day => (<Dates key={day} data-value={day} onClick={this.clickHandler.bind(this)}>{day}</Dates>))}</CalendarDates>
-            <CalendarDates>{this.state.week3.map(day => (<Dates key={day} data-value={day} onClick={this.clickHandler.bind(this)}>{day}</Dates>))}</CalendarDates>
-            <CalendarDates>{this.state.week4.map(day => (<Dates key={day} data-value={day} onClick={this.clickHandler.bind(this)}>{day}</Dates>))}</CalendarDates>
-            <CalendarDates>{this.state.week5.map(day => (<Dates key={day} data-value={day} onClick={this.clickHandler.bind(this)}>{day}</Dates>))}</CalendarDates>
+            <CalendarDates>{this.state.week0.map(day => (<Dates key={day.date()} data-value={day.date()} onClick={this.clickHandler.bind(this)}>{day.date()}</Dates>))}</CalendarDates>
+            <CalendarDates>{this.state.week1.map(day => (<Dates key={day.date()} data-value={day.date()} onClick={this.clickHandler.bind(this)}>{day.date()}</Dates>))}</CalendarDates>
+            <CalendarDates>{this.state.week2.map(day => (<Dates key={day.date()} data-value={day.date()} onClick={this.clickHandler.bind(this)}>{day.date()}</Dates>))}</CalendarDates>
+            <CalendarDates>{this.state.week3.map(day => (<Dates key={day.date()} data-value={day.date()} onClick={this.clickHandler.bind(this)}>{day.date()}</Dates>))}</CalendarDates>
+            <CalendarDates>{this.state.week4.map(day => (<Dates key={day.date()} data-value={day.date()} onClick={this.clickHandler.bind(this)}>{day.date()}</Dates>))}</CalendarDates>
+            <CalendarDates>{this.state.week5.map(day => (<Dates key={day.date()} data-value={day.date()} onClick={this.clickHandler.bind(this)}>{day.date()}</Dates>))}</CalendarDates>
           </tbody>
         </table>
         {this.state.date}
