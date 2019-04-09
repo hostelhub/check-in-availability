@@ -54,7 +54,8 @@ width: 50px;
 align-items: center;
 justify-content: center;
 border: solid 1px #AFADAD;
-color: #c6c6c6;
+color: #bababa;
+background-color: #EDEDED;
 `;
 
 const DuringMonthDates = styled.td`
