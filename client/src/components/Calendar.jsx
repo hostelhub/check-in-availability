@@ -40,18 +40,6 @@ const CalendarDays = styled.tr`
   color: #7A7A7A;
 `;
 
-const OutOfMonthDates = styled.td`
-display: flex;
-font-size: 20px;
-height: 40px;
-width: 50px;
-align-items: center;
-justify-content: center;
-border: solid 1px #AFADAD;
-color: #bababa;
-background-color: #EDEDED;
-`;
-
 const DuringMonthDates = styled.td`
   display: flex;
   font-size: 20px;
