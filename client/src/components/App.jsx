@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Calendar from './Calendar.jsx';
-import axios from 'axios';
 
 const Title = styled.header`
   font-size: 30px;
