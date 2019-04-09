@@ -153,7 +153,7 @@ class Calendar extends React.Component {
 
     const minMonth = moment().month();
     let button;
-    if (this.state.month === moment.months()[minMonth]) {
+    if ((this.state.month === moment.months()[minMonth]) && (this.state.year === moment().year())) {
       button = <MinimumMonthButton onClick={this.prevMonthHandler.bind(this)}>&#65308;</MinimumMonthButton>
     } else {
       button = <PrevNextButtons onClick={this.prevMonthHandler.bind(this)}>&#65308;</PrevNextButtons>
