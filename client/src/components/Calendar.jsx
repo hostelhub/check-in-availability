@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
-import axios from 'axios';
+import Weeks from './Weeks.jsx';
 
 const CalendarHeader = styled.thead`
   display: flex;
@@ -40,12 +40,6 @@ const CalendarDays = styled.tr`
   color: #7A7A7A;
 `;
 
-const CalendarDates = styled.tr`
-  display: flex;
-  justify-content: space-between;
-  font-family: arial;
-`;
-
 const OutOfMonthDates = styled.td`
 display: flex;
 font-size: 20px;
@@ -76,12 +70,7 @@ class Calendar extends React.Component {
       day: null,
       month: null,
       year: null,
-      week0: [],
-      week1: [],
-      week2: [],
-      week3: [],
-      week4: [],
-      week5: []
+      days: []
     };
   };
   
@@ -94,12 +83,7 @@ class Calendar extends React.Component {
       day,
       month,
       year,
-      week0: days[0],
-      week1: days[1],
-      week2: days[2],
-      week3: days[3],
-      week4: days[4],
-      week5: days[5]
+      days
     });
   };
   
@@ -111,12 +95,7 @@ class Calendar extends React.Component {
     this.setState({
       month: moment.months()[month],
       year: year,
-      week0: days[0],
-      week1: days[1],
-      week2: days[2],
-      week3: days[3],
-      week4: days[4],
-      week5: days[5]
+      days
     });
   }
 
@@ -128,12 +107,7 @@ class Calendar extends React.Component {
     this.setState({
       month: moment.months()[month],
       year: year,
-      week0: days[0],
-      week1: days[1],
-      week2: days[2],
-      week3: days[3],
-      week4: days[4],
-      week5: days[5]
+      days
     });
   }
   
@@ -191,60 +165,11 @@ class Calendar extends React.Component {
 
     const minMonth = moment().month();
     let button;
-    let date0;
-    let date1;
-    let date2;
-    let date3;
-    let date4;
-    let date5;
     if (this.state.month === moment.months()[minMonth]) {
       button = <MinimumMonthButton onClick={this.prevMonthHandler.bind(this)}>&#65308;</MinimumMonthButton>
     } else {
       button = <PrevNextButtons onClick={this.prevMonthHandler.bind(this)}>&#65308;</PrevNextButtons>
     }
-
-    date0 = <CalendarDates>{this.state.week0.map(day => {
-      if (this.state.month === moment.months()[day.month()]) {
-        return (<DuringMonthDates key={day} data-value={day.format()} onClick={this.dateClickHandler.bind(this)}>{day.date()}</DuringMonthDates>)
-      } else {
-        return (<OutOfMonthDates key={day} data-value={day.format()} onClick={this.dateClickHandler.bind(this)}>{day.date()}</OutOfMonthDates>)
-      }
-    })}</CalendarDates>
-    date1 = <CalendarDates>{this.state.week1.map(day => {
-      if (this.state.month === moment.months()[day.month()]) {
-        return (<DuringMonthDates key={day} data-value={day.format()} onClick={this.dateClickHandler.bind(this)}>{day.date()}</DuringMonthDates>)
-      } else {
-        return (<OutOfMonthDates key={day} data-value={day.format()} onClick={this.dateClickHandler.bind(this)}>{day.date()}</OutOfMonthDates>)
-      }
-    })}</CalendarDates>
-    date2 = <CalendarDates>{this.state.week2.map(day => {
-      if (this.state.month === moment.months()[day.month()]) {
-        return (<DuringMonthDates key={day} data-value={day.format()} onClick={this.dateClickHandler.bind(this)}>{day.date()}</DuringMonthDates>)
-      } else {
-        return (<OutOfMonthDates key={day} data-value={day.format()} onClick={this.dateClickHandler.bind(this)}>{day.date()}</OutOfMonthDates>)
-      }
-    })}</CalendarDates>
-    date3 = <CalendarDates>{this.state.week3.map(day => {
-      if (this.state.month === moment.months()[day.month()]) {
-        return (<DuringMonthDates key={day} data-value={day.format()} onClick={this.dateClickHandler.bind(this)}>{day.date()}</DuringMonthDates>)
-      } else {
-        return (<OutOfMonthDates key={day} data-value={day.format()} onClick={this.dateClickHandler.bind(this)}>{day.date()}</OutOfMonthDates>)
-      }
-    })}</CalendarDates>
-    date4 = <CalendarDates>{this.state.week4.map(day => {
-      if (this.state.month === moment.months()[day.month()]) {
-        return (<DuringMonthDates key={day} data-value={day.format()} onClick={this.dateClickHandler.bind(this)}>{day.date()}</DuringMonthDates>)
-      } else {
-        return (<OutOfMonthDates key={day} data-value={day.format()} onClick={this.dateClickHandler.bind(this)}>{day.date()}</OutOfMonthDates>)
-      }
-    })}</CalendarDates>
-    date5 = <CalendarDates>{this.state.week5.map(day => {
-      if (this.state.month === moment.months()[day.month()]) {
-        return (<DuringMonthDates key={day} data-value={day.format()} onClick={this.dateClickHandler.bind(this)}>{day.date()}</DuringMonthDates>)
-      } else {
-        return (<OutOfMonthDates key={day} data-value={day.format()} onClick={this.dateClickHandler.bind(this)}>{day.date()}</OutOfMonthDates>)
-      }
-    })}</CalendarDates>
 
     return(
       <div>
@@ -256,12 +181,7 @@ class Calendar extends React.Component {
           </CalendarHeader>
           <tbody>
             <CalendarDays>{this.state.weekdays.map(day => (<DuringMonthDates key={key += 1}>{day}</DuringMonthDates>))}</CalendarDays>
-            { date0 }
-            { date1 }
-            { date2 }
-            { date3 }
-            { date4 }
-            { date5 }
+            {this.state.days.map(week => <Weeks week={ week } month={ this.state.month } onClick={this.dateClickHandler.bind(this)}/>)}
           </tbody>
         </table>
       </div>
