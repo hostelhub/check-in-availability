@@ -1,9 +1,5 @@
 {
   "name": "",
-  "jest": {
-    "verbose": true,
-    "setupFilesAfterEnv": ["<rootDir>tests/sum.test.js"]
-  },
   "version": "",
   "description": "",
   "author": "",
@@ -12,16 +8,28 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "test": "jest",
-    "react-dev": "webpack -d --watch"
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "start": "nodemon ./server/index.js",
+    "build": "webpack -d --watch",
+    "seed": "node database/seeder.js"
+  },
+  "jest": {
+    "verbose": true,
+    "setupFiles": [
+      "<rootDir>/enzyme.config.js"
+    ]
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "moment": "^2.24.0",
     "mongoose": "^5.4.20",
     "react": "^16.8.5",
-    "react-dom": "^16.8.5"
+    "react-dom": "^16.8.5",
+    "styled-components": "^4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
@@ -29,7 +37,15 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
     "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.11.2",
+    "eslint": "^5.15.3",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.4.1",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
     "faker": "^4.1.0",
     "install": "^0.12.2",
     "jest": "^24.5.0",
