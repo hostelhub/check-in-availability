@@ -35,9 +35,9 @@ function Weeks(props) {
     <CalendarDates>
       {props.week.map(day => {
         if (props.month === moment.months()[day.month()]) {
-          return (<DuringMonthDates key={day} data-value={day.format()} handleClick={props.onClick}>{day.date()}</DuringMonthDates>)
+          return (<DuringMonthDates key={day} data-value={day.format()} onClick={props.onClick.bind(this)}>{day.date()}</DuringMonthDates>)
         } else {
-          return (<OutOfMonthDates key={day} data-value={day.format()} onClick={props.onClick}>{day.date()}</OutOfMonthDates>)
+          return (<OutOfMonthDates key={day} data-value={day.format()} onClick={props.onClick.bind(this)}>{day.date()}</OutOfMonthDates>)
         }
       })}
     </CalendarDates>
