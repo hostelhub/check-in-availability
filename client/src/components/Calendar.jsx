@@ -169,11 +169,11 @@ class Calendar extends React.Component {
         <BookingInfo>
           <div>
             <header>CHECK IN</header>
-            <InputFields name='check_in_date' value={this.state.checkInDate.format('DD MMM YYYY')} type='text' readonly='readonly' width='100' />
+            <InputFields name='check_in_date' value={this.state.checkInDate.format('DD MMM YYYY')} type='text' readOnly='readOnly' width='100' />
           </div>
           <div>
             <header>CHECK OUT</header>
-            <InputFields name='check_out_date' value={this.state.checkOutDate.format('DD MMM YYYY')} type='text' readonly='readonly' />
+            <InputFields name='check_out_date' value={this.state.checkOutDate.format('DD MMM YYYY')} type='text' readOnly='readOnly' />
           </div>
           <div>
             <header>GUESTS</header>
