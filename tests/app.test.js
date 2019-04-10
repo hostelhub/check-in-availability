@@ -1,7 +1,7 @@
 import React from 'react';
 import Calendar from '../client/src/components/Calendar';
 import CalendarDates from '../client/src/components/CalendarDates'
-import Weeks from '../client.src.components.Weeks'
+import Weeks from '../client/src/components/Weeks'
 import { shallow } from 'enzyme';
 
 describe('Calendar component application', () => {
