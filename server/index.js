@@ -14,7 +14,7 @@ app.get('/api/hostels/:hostelId', (req, res) => {
   const Id = req.params.hostelId;
   Hostel.find({ hostelId: Id }, (err, info) => {
     if (err) {
-      res.send(404);
+      res.sendStatus(404);
     } else {
       const bookedDays = [];
       for (let i = 0; i < info[0].bookedDates.length; i += 1) {
