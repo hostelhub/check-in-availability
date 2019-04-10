@@ -1,180 +1,197 @@
 import React from 'react';
-import moment from 'moment';
 import styled from 'styled-components';
-import Weeks from './Weeks.jsx';
+import CalendarDates from './CalendarDates.jsx';
+import moment from 'moment';
 
-const CalendarHeader = styled.thead`
+const Title = styled.header`
+  font-size: 30px;
+  font-family: arial;
+  margin-bottom: 10px;
+`;
+
+const BookingInfo = styled.div`
   display: flex;
   justify-content: column;
-  justify-content: space-between;
-  margin-bottom: 5px;
-`;
-
-const CalendarMonthYear = styled.tr`
-  display: flex;
-  justify-content: center;
-  font-size: 25px;
+  justify-content: space-evenly;
+  font-size: 15px;
   font-family: arial;
+  margin-bottom: 10px
 `;
 
-const MinimumMonthButton = styled.button`
-  background-color: white;
-  border: none;
-  color: #9b9b9b;
-  font-size: 100%;
-  font-weight: bold;
+const InputFields = styled.input`
+  height: 2.3125rem;
+  width: 100%;
+  font-size: 0.8rem;
+  color: #666;
 `;
 
-const PrevNextButtons = styled.button`
-  background-color: white;
-  border: none;
-  font-size: 100%;
-  font-weight: bold;
+const GuestsSelectorField = styled.select`
+  height: 2.3125rem;
+  width: 100%;
+  font-size: 0.8rem;
+  color: #666;
 `;
 
-const CalendarDays = styled.tr`
+const GroupOptions = styled.ul`
   display: flex;
-  justify-content: space-between;
-  font-family: arial;
-  background-color: #EDEDED;
-  color: #7A7A7A;
-`;
-
-const DuringMonthDates = styled.td`
-  display: flex;
-  font-size: 20px;
-  height: 40px;
-  width: 50px;
-  align-items: center;
+  justify-content: column;
   justify-content: center;
-  border: solid 1px #AFADAD;
+`;
+
+const LabelOptions = styled.ul`
+  display: flex;
+  margin-top: 11px;
+`;
+
+const GroupSelectorField = styled.select`
+  height: 2.3125rem;
+  width: 50%;
+  font-size: 0.8rem;
+  color: #666;
+`;
+
+const JustForShowButton = styled.button`
+color: #ffffff;
+background-color: #ff7547;
+height: 2.3125rem;
+width: 100%;
+font-size: 0.8rem;
+margin-top: 17px;
 `;
 
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      weekdays: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-      day: null,
-      month: null,
-      year: null,
-      days: []
+      checkInDate: moment(),
+      checkOutDate: moment().add(3, 'days'),
+      guestNumberOptions: [],
+      groupSize: 1,
+      groupTypes: [],
+      groupType: 'Group Type',
+      toTwelve: false,
+      toEighteen: false,
+      toTwentyOne: false,
+      toThirtyFive: false,
+      toFifty: false,
+      aboveFifty: false
     };
   };
-  
+
   componentDidMount() {
-    const day = moment();
-    const month = moment.months()[moment().month()];
-    const year = moment().year();
-    const days = this.allWeeksGenerator(month, year);
+    const guestNumberOptions = this.guestNumberGenerator();
+    const groupTypes = this.groupTypeGenerator();
     this.setState({
-      day,
-      month,
-      year,
-      days
-    });
-  };
-  
-  prevMonthHandler() {
-    const prevMonth = moment.max(moment(), moment().year(this.state.year).month(this.state.month).subtract(1, 'month'));
-    const month = prevMonth.month();
-    const year = prevMonth.year();
-    const days = this.allWeeksGenerator(month, year);
-    this.setState({
-      month: moment.months()[month],
-      year: year,
-      days
+      guestNumberOptions,
+      groupTypes
     });
   }
 
-  nextMonthHandler() {
-    const nextMonth = moment().year(this.state.year).month(this.state.month).add(1, 'month');
-    const month = nextMonth.month();
-    const year = nextMonth.year();
-    const days = this.allWeeksGenerator(month, year);
+  guestNumberHandler(e) {
     this.setState({
-      month: moment.months()[month],
-      year: year,
-      days
+      groupSize: parseInt(e.target.value)
     });
-  }
-  
-  dateClickHandler(e) {
+  };
+
+  groupTypeHandler(e) {
     this.setState({
-      day: moment(e.target.dataset.value)
-    })
-    console.log(this.state.day);
+      groupType: e.target.value
+    });
   };
 
-  firstWeekGenerator(month, year) {
-    const firstWeek = [];
-    const firstDay = moment().year(year).month(month).startOf('month').format('dd');
-    const daysOfWeek = {
-      'Mo': 1,
-      'Tu': 2,
-      'We': 3,
-      'Th': 4,
-      'Fr': 5,
-      'Sa': 6,
-      'Su': 7
-    };
-    if (firstDay === 'Mo') {
-      for (let i = 0; i < 7; i += 1) {
-        const firstDayOfMonth = moment().year(year).month(month).startOf('month');
-        firstWeek.push(firstDayOfMonth.add(i, 'days'));
-      }
-    } else {
-      for (let i = 1; i < daysOfWeek[firstDay]; i += 1) {
-        const firstDayOfMonth = moment().year(year).month(month).startOf('month');
-        firstWeek.unshift(firstDayOfMonth.subtract(i, 'days'));
-      };
-      for (let i = 0; i < 8 - daysOfWeek[firstDay]; i += 1) {
-        const firstDayOfMonth = moment().year(year).month(month).startOf('month');
-        firstWeek.push(firstDayOfMonth.add(i, 'days'));
-      }
-    }
-    return firstWeek;
+  groupAgeHandler(e) {
+    this.setState({
+      [e.target.name]: !this.state[e.target.name]
+    });
   };
 
-  allWeeksGenerator(month, year) {
-    const allWeeks = [];
-    const firstWeek = this.firstWeekGenerator(month, year);
-    allWeeks.push(firstWeek);
-    for (let i = 0; i < 5; i += 1) {
-      const week = allWeeks[i];
-      const newWeek = week.map(day => (moment(day).add(1, 'week')));
-      allWeeks.push(newWeek);
+  checkInClickHandler(e) {
+    this.setState({
+      checkInDate: moment(e.target.dataset.value),
+      checkOutDate: moment(e.target.dataset.value).add(3, 'days')
+    });
+  };
+
+  guestNumberGenerator() {
+    const guestNumberOptions = [<option key='1' value='1'>1 Guest</option>];
+    for (let i = 2; i < 81; i += 1) {
+      guestNumberOptions.push(<option key={`${i}`} value={`${i}`}>{i} Guests</option>);
     }
-    return allWeeks;
+    return guestNumberOptions;
+  }
+
+  groupTypeGenerator() {
+    const groupTypes = [
+      'Group Type',
+      'Holiday with Friends',
+      'Junior/Primary School',
+      'High/Secondary School',
+      'College/University',
+      'Business Trip',
+      'Stag / Hen / Bachelor Party',
+      'Sports Group',
+      'Cultural Group'
+    ];
+    const groupInfo = [];
+    for (let i = 0; i < groupTypes.length; i += 1) {
+      groupInfo.push(<option key={`${i}`} value={`${groupTypes[i]}`}>{groupTypes[i]}</option>)
+    }
+    return groupInfo;
   }
 
   render() {
-    let key = 0;
-
-    const minMonth = moment().month();
-    let button;
-    if ((this.state.month === moment.months()[minMonth]) && (this.state.year === moment().year())) {
-      button = <MinimumMonthButton onClick={this.prevMonthHandler.bind(this)}>&#65308;</MinimumMonthButton>
+    let groupTypeOptions;
+    let groupAgeOptions;
+    if (this.state.groupSize >= '9') {
+      groupTypeOptions = <GroupSelectorField name='type_of_group' value={this.state.groupType} onChange={this.groupTypeHandler.bind(this)}>{this.state.groupTypes.map(type => {return type})}</GroupSelectorField>
+      groupAgeOptions = <LabelOptions class='age_selection'>
+          <label name='toTwelve'>0-12</label>
+          <input type='checkbox' name='toTwelve' value={this.state.toTwelve} onClick={this.groupAgeHandler.bind(this)} />
+          <label name='toTwelve'>12-18</label>
+          <input type='checkbox' name='toEighteen' value={this.state.toEighteen} onClick={this.groupAgeHandler.bind(this)} />
+          <label name='toTwelve'>18-21</label>
+          <input type='checkbox' name='toTwentyOne' value={this.state.toTwentyOne} onClick={this.groupAgeHandler.bind(this)} />
+          <label name='toTwelve'>21-35</label>
+          <input type='checkbox' name='toThirtyFive' value={this.state.toThirtyFive} onClick={this.groupAgeHandler.bind(this)} />
+          <label name='toTwelve'>35-50</label>
+          <input type='checkbox' name='toFifty' value={this.state.toFifty} onClick={this.groupAgeHandler.bind(this)} />
+          <label name='toTwelve'>50+</label>
+          <input type='checkbox' name='aboveFifty' value={this.state.aboveFifty} onClick={this.groupAgeHandler.bind(this)} />
+        </LabelOptions>
     } else {
-      button = <PrevNextButtons onClick={this.prevMonthHandler.bind(this)}>&#65308;</PrevNextButtons>
+      groupTypeOptions = null;
+      groupAgeOptions = null;
     }
 
-    return(
+    return (
       <div>
-        <table>
-          <CalendarHeader>
-            {button}
-            <CalendarMonthYear>{this.state.month} {this.state.year}</CalendarMonthYear>
-            <PrevNextButtons onClick={this.nextMonthHandler.bind(this)}>&#65310;</PrevNextButtons>
-          </CalendarHeader>
-          <tbody>
-            <CalendarDays>{this.state.weekdays.map(day => (<DuringMonthDates key={key += 1}>{day}</DuringMonthDates>))}</CalendarDays>
-            {this.state.days.map(week => <Weeks week={ week } month={ this.state.month } onClick={this.dateClickHandler.bind(this)}/>)}
-          </tbody>
-        </table>
+        <Title>Check Availability</Title>
+        <BookingInfo>
+          <div>
+            <header>CHECK IN</header>
+            <InputFields name='check_in_date' value={this.state.checkInDate.format('DD MMM YYYY')} type='text' readonly='readonly' width='100' />
+          </div>
+          <div>
+            <header>CHECK OUT</header>
+            <InputFields name='check_out_date' value={this.state.checkOutDate.format('DD MMM YYYY')} type='text' readonly='readonly' />
+          </div>
+          <div>
+            <header>GUESTS</header>
+            <GuestsSelectorField name='number_of_guests' value={this.state.guestNumber} onChange={this.guestNumberHandler.bind(this)}>{this.state.guestNumberOptions.map(option => {return option})}</GuestsSelectorField>
+          </div>
+          <div>
+            <JustForShowButton>Search</JustForShowButton>
+          </div>
+        </BookingInfo>
+        <CalendarDates checkIn={this.state.checkInDate} checkOut={this.state.checkOutDate} onClick={this.checkInClickHandler.bind(this)}/>
+        <GroupOptions>
+          { groupTypeOptions }
+          { groupAgeOptions }
+        </GroupOptions>
       </div>
-    );
-  };
-};
+    )
+  }
+}
 
 export default Calendar;
+window.Calendar = Calendar;
