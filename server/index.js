@@ -2,26 +2,29 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { Hostel } = require('../database/index.js');
-const mongoose = require('../database/index.js');
 
 const app = express();
 
-app.use(express.static(`${__dirname} + /../client/dist`));
+app.use('/hostels/:hostelId', express.static(`${__dirname} + /../client/dist`));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/api/hostels/:hostelId', (req, res) => {
-  const id = req.params.hostelId;
-  Hostel.find({ hostelId: id }, (err, info) => {
+  const Id = req.params.hostelId;
+  Hostel.find({ hostelId: Id }, (err, info) => {
     if (err) {
-      console.log(err);
+      res.send(404);
     } else {
-      console.log(info);
-      res.send(info);
+      const bookedDays = [];
+      for (let i = 0; i < info[0].bookedDates.length; i += 1) {
+        bookedDays.push(info[0].bookedDates[i]);
+      }
+      res.status(200).send(bookedDays);
     }
   });
 });
 
-const port = 3000;
+
+const port = 3001;
 app.listen(port, () => { console.log(`Listening on port ${port}`); });
