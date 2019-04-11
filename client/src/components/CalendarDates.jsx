@@ -7,7 +7,7 @@ const CalendarHeader = styled.thead`
   display: flex;
   justify-content: column;
   justify-content: space-between;
-  background-color: #FFFFFF
+  background-color: #FFFFFF;
 `;
 
 const CalendarMonthYear = styled.tr`
