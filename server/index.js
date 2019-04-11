@@ -26,5 +26,5 @@ app.get('/api/hostels/:hostelId', (req, res) => {
 });
 
 
-const port = 3001;
+const port = 3002;
 app.listen(port, () => { console.log(`Listening on port ${port}`); });
