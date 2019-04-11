@@ -1,6 +1,5 @@
 import React from 'react';
 import moment from 'moment';
-import styled from 'styled-components';
 import Weeks from './Weeks.jsx';
 
 const CalendarHeader = styled.thead`

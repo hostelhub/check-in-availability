@@ -1,7 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
 import CalendarDates from './CalendarDates.jsx';
 import moment from 'moment';
+
+const CalendarContainer = styled.div`
+  padding: 15px;
+  margin-top: 30px;
+  background-color: #EDEDED;
+`;
 
 const Title = styled.header`
   font-size: 30px;
@@ -15,7 +20,8 @@ const BookingInfo = styled.div`
   justify-content: space-evenly;
   font-size: 15px;
   font-family: arial;
-  margin-bottom: 10px
+  margin-bottom: 10px;
+  background-color:
 `;
 
 const InputFields = styled.input`
@@ -190,7 +196,7 @@ class Calendar extends React.Component {
     }
 
     return (
-      <div>
+      <CalendarContainer>
         <Title>Check Availability</Title>
         <BookingInfo>
           <div>
@@ -214,7 +220,7 @@ class Calendar extends React.Component {
           { groupTypeOptions }
           { groupAgeOptions }
         </GroupOptions>
-      </div>
+      </CalendarContainer>
     )
   }
 }
