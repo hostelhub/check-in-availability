@@ -13,23 +13,22 @@ const Title = styled.header`
 const BookingInfo = styled.div`
   display: flex;
   justify-content: column;
-  justify-content: space-evenly;
+  justify-content: space-around;
   font-size: 15px;
   font-family: arial;
   margin-bottom: 10px;
-  background-color:
 `;
 
 const InputFields = styled.input`
-  height: 2.3125rem;
-  width: 100%;
+  height: 1.9rem;
+  width: 150%;
   font-size: 0.8rem;
   color: #666;
 `;
 
 const GuestsSelectorField = styled.select`
   height: 2.3125rem;
-  width: 100%;
+  width: 150%;
   font-size: 0.8rem;
   color: #666;
 `;
@@ -43,7 +42,6 @@ const GroupOptions = styled.ul`
 const LabelOptions = styled.ul`
   display: flex;
   margin-top: 11px;
-  width: 100%
 `;
 
 const GroupSelectorField = styled.select`
