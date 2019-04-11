@@ -10,7 +10,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/api/hostels/:hostelId', (req, res) => {
+app.get('/api/hostels/:hostelId/calendar', (req, res) => {
   const Id = req.params.hostelId;
   Hostel.find({ hostelId: Id }, (err, info) => {
     if (err) {

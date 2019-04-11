@@ -19,7 +19,7 @@ class Weeks extends React.Component {
 
   componentDidMount() {
     const Id = window.location.pathname.split('/')[2];
-    axios.get(`/api/hostels/${Id}`)
+    axios.get(`/api/hostels/${Id}/calendar`)
       .then(response => {
         const unformattedDays = response.data;
         const bookedDays = unformattedDays.map(day => (moment(day)));
