@@ -75,6 +75,9 @@ const VisibleCalendar = styled.div`
   top: 120;
   left: 30;
   z-index: 1;
+  background-color: #FFFFFF;
+  padding: 5px;
+  border: 1px solid #AFADAD;
 `;
 
 class Calendar extends React.Component {
