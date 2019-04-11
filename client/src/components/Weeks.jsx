@@ -1,57 +1,13 @@
 import React from 'react';
 import moment from 'moment';
 import axios from 'axios';
-
-const Dates = styled.tr`
-  display: flex;
-  justify-content: space-between;
-  font-family: arial;
-`;
-
-const ClickedDates = styled.td`
-  display: flex;
-  font-size: 20px;
-  height: 40px;
-  width: 50px;
-  align-items: center;
-  justify-content: center;
-  border: solid 1px #AFADAD;
-  color: #FFFFFF;
-  background-color: #88AA64;
-`;
-
-const BookedDates = styled.td`
-  display: flex;
-  font-size: 20px;
-  height: 40px;
-  width: 50px;
-  align-items: center;
-  justify-content: center;
-  border: solid 1px #AFADAD;
-  background-color: #FFE3E3
-`;
-
-const UnbookedDates = styled.td`
-  display: flex;
-  font-size: 20px;
-  height: 40px;
-  width: 50px;
-  align-items: center;
-  justify-content: center;
-  border: solid 1px #AFADAD;
-  background-color: #DAFDC0;
-`;
-
-const OutOfMonthDates = styled.td`
-  display: flex;
-  font-size: 20px;
-  height: 40px;
-  width: 50px;
-  align-items: center;
-  justify-content: center;
-  border: solid 1px #AFADAD;
-  color: #BABABA;
-`;
+import {
+  Dates,
+  ClickedDates,
+  BookedDates,
+  UnbookedDates,
+  OutOfMonthDates,
+} from './StyledComponents/styledWeeks.jsx';
 
 class Weeks extends React.Component {
   constructor(props) {
@@ -63,7 +19,7 @@ class Weeks extends React.Component {
 
   componentDidMount() {
     const Id = window.location.pathname.split('/')[2];
-    axios.get(`/api/hostels/${Id}`)
+    axios.get(`/api/hostels/${Id}/calendar`)
       .then(response => {
         const unformattedDays = response.data;
         const bookedDays = unformattedDays.map(day => (moment(day)));
