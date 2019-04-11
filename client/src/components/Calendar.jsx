@@ -51,12 +51,12 @@ const GroupSelectorField = styled.select`
 `;
 
 const JustForShowButton = styled.button`
-color: #ffffff;
-background-color: #ff7547;
-height: 2.3125rem;
-width: 100%;
-font-size: 0.8rem;
-margin-top: 17px;
+  color: #FFFFFF;
+  background-color: #ff7547;
+  height: 2.3125rem;
+  width: 100%;
+  font-size: 0.8rem;
+  margin-top: 17px;
 `;
 
 class Calendar extends React.Component {
