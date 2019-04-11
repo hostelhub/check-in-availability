@@ -41,6 +41,7 @@ const GroupOptions = styled.ul`
 const LabelOptions = styled.ul`
   display: flex;
   margin-top: 11px;
+  width: 100%
 `;
 
 const GroupSelectorField = styled.select`
@@ -59,6 +60,17 @@ const JustForShowButton = styled.button`
   margin-top: 17px;
 `;
 
+const InvisibleCalendar = styled.div`
+  display: none;
+`;
+
+const VisibleCalendar = styled.div`
+  position: absolute;
+  top: 120;
+  left: 30;
+  z-index: 1;
+`;
+
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
@@ -69,6 +81,7 @@ class Calendar extends React.Component {
       groupSize: 1,
       groupTypes: [],
       groupType: 'Group Type',
+      isVisible: false,
       toTwelve: false,
       toEighteen: false,
       toTwentyOne: false,
@@ -120,6 +133,12 @@ class Calendar extends React.Component {
     return guestNumberOptions;
   }
 
+  showCalendarHandler() {
+    this.setState({
+      isVisible: !this.state.isVisible
+    })
+  }
+
   groupTypeGenerator() {
     const groupTypes = [
       'Group Type',
@@ -163,13 +182,20 @@ class Calendar extends React.Component {
       groupAgeOptions = null;
     }
 
+    let disappearingCalendar;
+    if (this.state.isVisible === false) {
+      disappearingCalendar = <InvisibleCalendar><CalendarDates checkIn={this.state.checkInDate} checkOut={this.state.checkOutDate} onClick={this.checkInClickHandler.bind(this)}/></InvisibleCalendar>
+    } else {
+      disappearingCalendar = <VisibleCalendar><CalendarDates checkIn={this.state.checkInDate} checkOut={this.state.checkOutDate} onClick={this.checkInClickHandler.bind(this)}/></VisibleCalendar>
+    }
+
     return (
       <div>
         <Title>Check Availability</Title>
         <BookingInfo>
           <div>
             <header>CHECK IN</header>
-            <InputFields name='check_in_date' value={this.state.checkInDate.format('DD MMM YYYY')} type='text' readOnly='readOnly' width='100' />
+            <InputFields name='check_in_date' onClick={this.showCalendarHandler.bind(this)} value={this.state.checkInDate.format('DD MMM YYYY')} type='text' readOnly='readOnly' />
           </div>
           <div>
             <header>CHECK OUT</header>
@@ -183,7 +209,7 @@ class Calendar extends React.Component {
             <JustForShowButton>Search</JustForShowButton>
           </div>
         </BookingInfo>
-        <CalendarDates checkIn={this.state.checkInDate} checkOut={this.state.checkOutDate} onClick={this.checkInClickHandler.bind(this)}/>
+        { disappearingCalendar }
         <GroupOptions>
           { groupTypeOptions }
           { groupAgeOptions }
