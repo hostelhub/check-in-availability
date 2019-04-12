@@ -1,6 +1,7 @@
 const CalendarContainer = styled.div`
   padding: 15px;
   margin-top: 30px;
+  margin-bottom: 20px;
   background-color: #EDEDED;
 `;
 
