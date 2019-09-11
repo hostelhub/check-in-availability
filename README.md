@@ -1,39 +1,28 @@
-# Project Name
+# Check In Availability 
 
-> Project description
+Displays available and booked dates on a calendar for current and future dates.
 
 ## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+  - https://github.com/hostelhub/property-description
+  - https://github.com/hostelhub/reviews-and-ratings
 
-## Table of Contents
+## Getting started
+  
+  After navigating to the booking module folder, run the following commands:
+  ```sh
+  npm install
+  npm run seed
+  npm run build
+  npm start
+  ```
+  
+## CRUD API
+  ### 1. Get similar homes for the accommodation selected - (READ)
+  The components can retrieve and suggest similiar homes from the database for the selected accommodation
 
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
+  ```sh
+  GET - /api/hostels/:hostelId/calendar
+  ```
 
-## Usage
-
-> Some usage instructions
-
-## Requirements
-
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
-
-- Node 6.13.0
-- etc
-
-## Development
-
-### Installing Dependencies
-
-From within the root directory:
-
-```sh
-npm install -g webpack
-npm install
-```
-
+  - *There is no create, update, or delete API for this component*
